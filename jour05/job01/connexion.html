@@ -25,52 +25,69 @@
     </form>
 
     <script>
+        // Sélectionner le formulaire, les champs d'email et de mot de passe, ainsi que les éléments pour afficher les erreurs
         const form = document.getElementById('loginForm');
-        const emailInput = document.getElementById('email');
-        const passwordInput = document.getElementById('password');
-        const emailError = document.getElementById('emailError');
-        const passwordError = document.getElementById('passwordError');
+        const emailInput = document.getElementById('email'); // Champ pour l'email
+        const passwordInput = document.getElementById('password'); // Champ pour le mot de passe
+        const emailError = document.getElementById('emailError'); // Span pour afficher les erreurs de l'email
+        const passwordError = document.getElementById('passwordError'); // Span pour afficher les erreurs du mot de passe
 
+        // Fonction asynchrone pour valider l'email
         const validateEmail = async (email) => {
+            // Vérifie si l'email est dans un format valide en utilisant une expression régulière
             if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                throw new Error('Email invalide');
+                throw new Error('Email invalide'); // Lancer une erreur si l'email est incorrect
             }
         };
 
+        // Fonction asynchrone pour valider le mot de passe
         const validatePassword = async (password) => {
+            // Vérifie que le mot de passe contient au moins 8 caractères
             if (password.length < 8) {
-                throw new Error('Le mot de passe doit contenir au moins 8 caractères');
+                throw new Error('Le mot de passe doit contenir au moins 8 caractères'); // Lancer une erreur si le mot de passe est trop court
             }
         };
 
+        // Écouter les changements dans le champ d'email pour une validation en temps réel
         emailInput.addEventListener('input', async () => {
             try {
+                // Valider l'email à chaque modification
                 await validateEmail(emailInput.value);
-                emailError.textContent = '';
+                emailError.textContent = ''; // Si l'email est valide, effacer le message d'erreur
             } catch (error) {
+                // Afficher le message d'erreur si la validation échoue
                 emailError.textContent = error.message;
             }
         });
 
+        // Écouter les changements dans le champ de mot de passe pour une validation en temps réel
         passwordInput.addEventListener('input', async () => {
             try {
+                // Valider le mot de passe à chaque modification
                 await validatePassword(passwordInput.value);
-                passwordError.textContent = '';
+                passwordError.textContent = ''; // Si le mot de passe est valide, effacer le message d'erreur
             } catch (error) {
+                // Afficher le message d'erreur si la validation échoue
                 passwordError.textContent = error.message;
             }
         });
 
+        // Écouter l'événement de soumission du formulaire
         form.addEventListener('submit', async (e) => {
-            e.preventDefault();
+            e.preventDefault(); // Empêcher l'envoi automatique du formulaire
+
             try {
+                // Valider l'email et le mot de passe lors de la soumission
                 await validateEmail(emailInput.value);
                 await validatePassword(passwordInput.value);
-                console.log('Formulaire valide, envoi des données...');
+                console.log('Formulaire valide, envoi des données...'); // Si tout est valide, afficher un message de succès
+                // Ici, vous pouvez ajouter le code pour envoyer les données au serveur
             } catch (error) {
+                // Afficher un message dans la console si une erreur survient lors de la validation
                 console.error('Erreur de validation:', error.message);
             }
         });
+
     </script>
 </body>
 </html>
