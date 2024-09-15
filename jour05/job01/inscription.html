@@ -4,11 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inscription</title>
-    <script src="script.js" defer></script>
+    <style>
+        .error { color: red; }
+    </style>
 </head>
 <body>
     <h1>Inscription</h1>
-    <form id="inscriptionForm">
+    <form id="registrationForm">
         <div>
             <label for="nom">Nom :</label>
             <input type="text" id="nom" name="nom" required>
@@ -30,6 +32,11 @@
             <span id="passwordError" class="error"></span>
         </div>
         <div>
+            <label for="confirmPassword">Confirmer le mot de passe :</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" required>
+            <span id="confirmPasswordError" class="error"></span>
+        </div>
+        <div>
             <label for="adresse">Adresse :</label>
             <input type="text" id="adresse" name="adresse" required>
             <span id="adresseError" class="error"></span>
@@ -41,5 +48,77 @@
         </div>
         <button type="submit">S'inscrire</button>
     </form>
+
+    <script>
+        const form = document.getElementById('registrationForm');
+        const inputs = form.querySelectorAll('input');
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+        const confirmPasswordError = document.getElementById('confirmPasswordError');
+
+        const validateField = async (field) => {
+            const value = field.value.trim();
+            switch (field.id) {
+                case 'nom':
+                case 'prenom':
+                    if (value.length < 4 || !/^[A-Z]/.test(value)) {
+                        throw new Error(`La première lettre doit être majuscule et contenir au moins 4 caractères`);
+                    }
+                    break;
+                case 'email':
+                    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+                        throw new Error('Email invalide');
+                    }
+                    break;
+                case 'password':
+                    if (!/^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/.test(value)) {
+                        throw new Error('Le mot de passe doit contenir au moins 8 caractères, une majuscule, un chiffre et un caractère spécial');
+                    }
+                    break;
+                case 'confirmPassword':
+                    if (value !== passwordInput.value) {
+                        throw new Error('Les mots de passe ne correspondent pas');
+                    }
+                    break;
+                case 'codePostal':
+                    if (!/^\d{5}$/.test(value)) {
+                        throw new Error('Code postal invalide (5 chiffres requis)');
+                    }
+                    break;
+                default:
+                    if (value.length === 0) {
+                        throw new Error('Ce champ est requis');
+                    }
+            }
+        };
+
+        inputs.forEach(input => {
+            input.addEventListener('input', async () => {
+                try {
+                    await validateField(input);
+                    document.getElementById(`${input.id}Error`).textContent = '';
+                } catch (error) {
+                    document.getElementById(`${input.id}Error`).textContent = error.message;
+                }
+            });
+        });
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            let isValid = true;
+            for (let input of inputs) {
+                try {
+                    await validateField(input);
+                } catch (error) {
+                    isValid = false;
+                    document.getElementById(`${input.id}Error`).textContent = error.message;
+                }
+            }
+            if (isValid) {
+                console.log('Formulaire valide, envoi des données...');
+                // Ici, vous pouvez ajouter le code pour envoyer les données au serveur
+            }
+        });
+    </script>
 </body>
 </html>
