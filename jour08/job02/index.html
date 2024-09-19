@@ -1,14 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
 <head>
-    <!-- ... autres balises meta ... -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Création de compte</title>
+<!-- ... autres balises meta ... -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+
 </head>
-<header class="bg-blue-500 p-4">
-    <nav class="container mx-auto">
-        <ul class="flex justify-between text-white">
-            <li><a href="index.html" class="hover:text-blue-200">Accueil</a></li>
-            <li><a href="index.html" class="hover:text-blue-200">Inscription</a></li>
-            <li><a href="index.html" class="hover:text-blue-200">Connexion</a></li>
-            <li><a href="index.html" class="hover:text-blue-200">Rechercher</a></li>
+<body>
+    <header class="bg-blue-500 p-4">
+        <nav class="container mx-auto">
+            <ul class="flex justify-between text-white">
+                <li><a href="index.html" class="hover:text-blue-200">Accueil</a></li>
+                <li><a href="index.html" class="hover:text-blue-200">Inscription</a></li>
+                <li><a href="index.html" class="hover:text-blue-200">Connexion</a></li>
+                <li><a href="index.html" class="hover:text-blue-200">Rechercher</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <form>
+                <div>
+                    <label>Civilité :</label>
+                    <input type="radio" name="civilite" value="m"> M.
+                    <input type="radio" name="civilite" value="mme"> Mme
+                </div>
+                <div>
+                    <label for="prenom">Prénom :</label>
+                    <input type="text" id="prenom" name="prenom">
+                </div>
+                <div>
+                    <label for="nom">Nom :</label>
+                    <input type="text" id="nom" name="nom">
+                </div>
+                <div>
+                    <label for="adresse">Adresse :</label>
+                    <input type="text" id="adresse" name="adresse">
+                </div>
+                <div>
+                    <label for="email">Email :</label>
+                    <input type="email" id="email" name="email">
+                </div>
+                <div>
+                    <label for="password">Mot de passe :</label>
+                    <input type="password" id="password" name="password">
+                </div>
+                <div>
+                    <label for="password_confirm">Confirmer le mot de passe :</label>
+                    <input type="password" id="password_confirm" name="password_confirm">
+                </div>
+                <div>
+                    <label>Passions :</label>
+                    <input type="checkbox" name="passions[]" value="informatique"> Informatique
+                    <input type="checkbox" name="passions[]" value="voyages"> Voyages
+                    <input type="checkbox" name="passions[]" value="sport"> Sport
+                    <input type="checkbox" name="passions[]" value="lecture"> Lecture
+                </div>
+                <button type="submit">Valider</button>
+            </form>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white p-4 mt-8">
+        <ul class="flex justify-center space-x-4">
+            <li><a href="index.html" class="hover:text-gray-300">Accueil</a></li>
+            <li><a href="index.html" class="hover:text-gray-300">Inscription</a></li>
+            <li><a href="index.html" class="hover:text-gray-300">Connexion</a></li>
+            <li><a href="index.html" class="hover:text-gray-300">Rechercher</a></li>
         </ul>
-    </nav>
-</header>
+    </footer>
+</body>
+</html>
